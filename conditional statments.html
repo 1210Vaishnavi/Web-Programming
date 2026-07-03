@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Student Grade Calculator</title>
+<style>
+body{
+font-family:Arial,sans-serif;
+padding:20px;
+}
+.result{
+margin-top:10px;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+<h2>Student Grade Calculator</h2>
+
+<label for="marks">Enter Marks(0-100):</labels>
+<input type="number"id="marks"min="0"max="100"/>
+<button onclick="calculateGrade()">Get Grade</button>
+
+<div class="result" id="gradeOutput"></div>
+
+<script>
+function calculateGrade(){
+const marks=parseFloat(document.getElementById("marks").value);
+let grade="";
+if(isNaN(marks) || marks<0 || marks>100)
+grade="Please  enter valid marks between 0 and 100.";
+else if(marks>=90)
+grade="Grade:A+";
+else if(marks>=80)
+grade="Grade:A";
+else if(marks>=70)
+grade="Grade:B";
+else if(marks>=60)
+grade="Grade:C";
+else if(marks>=50)
+grade="Grade:D";
+else
+grade="Grade:F(Fail)";
+document.getElementById("gradeOutput").innerText=grade;
+}
+</script>
+</body>
+</html>
