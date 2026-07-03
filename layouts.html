@@ -1,0 +1,102 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Page Layout with CSS</title>
+<style>
+*{
+margin:0;
+padding:0
+;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial, sans-serif;
+line-height:1.6;
+}
+
+.container{
+display:grid;
+grid-template-areas:
+"header header"
+"nav nav"
+"main sidebar"
+"footer footer";
+grid-template-columns:3fr 1fr;
+grid-template-rows:auto auto 1fr auto;
+min-height:100vh;
+gap:1rem;
+padding:1rem;
+}
+header{
+grid-area:header;
+background:#333;
+color:white;
+padding:1rem;
+text-align:center;
+}
+nav
+{
+grid-area:nav;
+background:#444;
+color:white;
+padding:0.5rem;
+}
+main{
+grid-area:main;
+background:#f4f4f4;
+padding:1rem;
+}
+aside{
+grid-area:sidebar;
+background:#e4e4e4;
+padding:1rem;
+}
+footer{
+grid-area:footer;
+background:#333;
+color:white;
+text-align:center;
+padding:1rem;
+}
+@media(max-width:768px){
+.container{
+grid-template-areas:
+"header"
+"nav"
+"main"
+"sidebar"
+"footer";
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>Website Title</h1>
+</header>
+
+<nav>
+<ul style="list-style:none;display:flex;gap:1rem;">
+<li><a href ="#" style="color:white;">Home</a></li>
+<li><a href ="#" style="color:white;">About</a></li>
+<li><a href ="#" style="color:white;">Contact</a></li>
+</ul>
+</nav>
+<main>
+<h2>Main Content</h2>
+<p>This is the primary content area of the webpage.</p>
+</main>
+<aside>
+<h3>Sidebar</h3>
+<p>Links,ads, or other info goes here.</p>
+</aside>
+<footer>
+<p>&copy;2025 Ki&i&B</p>
+</footer>
+</div>
+</body>
+</html>
