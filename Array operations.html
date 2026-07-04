@@ -1,82 +1,88 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Array Operations</title>
-<style>
-body{
-font-family:Arial,sans-serif;
-padding:20px;
-}
-input,button{
-margin:5px;
-padddingL:5px 10px;
-}
-#output{
-margin-top:15px;
-font-weight:bold;
-}
-</style>
+    <title>Array Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        input, button {
+            margin: 5px;
+            padding: 5px 10px;
+        }
+
+        #output {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-<h2>Array OPerations with JavaSCript</h2>
-<input type="text" id="elementInput" placeholder="Enter element">
-<button onclick="addElement()">Add</button>
-<button onclick="removeElement()">Remove</button>
-<button onclick="searchElement()">Search</button>
-<buttton onclick="displayArray()">Display Array</button>
-<div id="output"></div>
-<script>
-let myArray=[];
-function addElement()
-{
-const input=document.getElementBYId('elementInput').value;
-if(input!=="")
-{
-myArray.push(input);
-showOutput('Added"${input}"to the array.');
-document.getElementById('elementInput').value="";
-}
-else
-{
-showOuput("Please enter a value.");
-}
-}
 
-function removeElement()
-{
-const input=document.getElementById('elementInput').value;
-const index=myArray.indexOf(input);
-if(index!==-1)
-{
-myArray.splice(index,1);
-showOutput('Removed "${input}"from the array.');
-}
-else{
-showOutput('Element '${input}"not found.');
-}
-}
+    <h2>Array Operations with JavaScript</h2>
 
-function searchElement()
-{
-const input=document.getElementById('elementInput').value;
-const index=myArray.indexOf(input);
-if(index!==-1)
-{
-showOutput('Element "${input}" found at index ${index}.');
-}
-else
-{
-showOutput('Element "${input}" not found.");
-}
-}
-function displayArray()
-{
-showOutput("Array contents:["+myArray.join(',')+"]");
-}
-function showOutput(message)
-{
-document.getElementById('output').innerText=message;
-}
-</script>
+    <input type="text" id="elementInput" placeholder="Enter element">
+
+    <button onclick="addElement()">Add</button>
+    <button onclick="removeElement()">Remove</button>
+    <button onclick="searchElement()">Search</button>
+    <button onclick="displayArray()">Display Array</button>
+
+    <div id="output"></div>
+
+    <script>
+
+        let myArray = [];
+
+        function addElement() {
+            const input = document.getElementById("elementInput").value;
+
+            if (input !== "") {
+                myArray.push(input);
+                showOutput(`Added "${input}" to the array.`);
+                document.getElementById("elementInput").value = "";
+            } else {
+                showOutput("Please enter a value.");
+            }
+        }
+
+        function removeElement() {
+            const input = document.getElementById("elementInput").value;
+            const index = myArray.indexOf(input);
+
+            if (index !== -1) {
+                myArray.splice(index, 1);
+                showOutput(`Removed "${input}" from the array.`);
+            } else {
+                showOutput(`Element "${input}" not found.`);
+            }
+
+            document.getElementById("elementInput").value = "";
+        }
+
+        function searchElement() {
+            const input = document.getElementById("elementInput").value;
+            const index = myArray.indexOf(input);
+
+            if (index !== -1) {
+                showOutput(`Element "${input}" found at index ${index}.`);
+            } else {
+                showOutput(`Element "${input}" not found.`);
+            }
+        }
+
+        function displayArray() {
+            showOutput("Array contents: [" + myArray.join(", ") + "]");
+        }
+
+        function showOutput(message) {
+            document.getElementById("output").innerText = message;
+        }
+
+    </script>
+
 </body>
 </html>
-                                                                      
