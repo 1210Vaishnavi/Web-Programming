@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email and Password Validation</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+input {
+    margin-bottom: 10px;
+    display: block;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Login Form</h2>
+
+<form id="loginForm" onsubmit="return validateForm()">
+
+    <label>Email:</label>
+    <input type="text" id="email">
+    <p><span id="emailError" class="error"></span></p>
+
+    <label>Password:</label>
+    <input type="password" id="password">
+    <p><span id="passwordError" class="error"></span></p>
+
+    <button type="submit">Submit</button>
+    <button id="reset" type="reset">Reset</button>
+
+</form>
+
+<p id="message"></p>
+
+<script>
+function EraseError() {
+    document.getElementById("emailError").textContent = "";
+    document.getElementById("passwordError").textContent = "";
+    document.getElementById("message").textContent = "";
+}
+
+document.getElementById("reset").addEventListener("click", EraseError);
+
+function validateForm() {
+
+    EraseError();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    let valid = true;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        document.getElementById("emailError").textContent =
+            "Invalid email format";
+        valid = false;
+    }
+
+    // Password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+        document.getElementById("passwordError").textContent =
+            "Password must be at least 8 characters long, include uppercase, lowercase, and a number.";
+        valid = false;
+    }
+
+    if (valid) {
+        const message = document.getElementById("message");
+        message.textContent = "Email and password are valid.";
+        message.className = "success";
+        return false; // Prevent form submission for demo
+    }
+
+    return false;
+}
+</script>
+
+</body>
+</html>
