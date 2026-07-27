@@ -1,18 +1,15 @@
 <html>
 <head>
-<title>HTML & DHTML Demo</title>
-<style>
-body {font-family: Arial,margin:20px;}
-nav a{margin:10px;text-decoration:none;color:blue;}
-</style>
+<title>Client Form</title>
 </head>
 <body>
-<h1>Welcome to the HTML &DHTML Demo</h1>
-<p>This application demonstrates key features of HTML and DHTML.</p>
-<nav>
-<a href="form.html">HTML Form</a>|
-<a href="styles-media.html">HTML Styles & Media</a>|
-<a href="dhtml.html">DHTML Features</a>
-</nav>
+<h2>Enter your Details</h2>
+<form action="response.jsp" method="post">
+<label>Name:</label>
+<input type="text" name="username" required><br><br>
+<label>Age:</label>
+<input type="number" name="age" required><br><br>
+<input type="submit" value="Submit">
+</form>
 </body>
 </html>
