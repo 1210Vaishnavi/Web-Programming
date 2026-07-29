@@ -1,15 +1,24 @@
 <html>
 <head>
-<title>Client Form</title>
+    <title>Servlet Client</title>
 </head>
 <body>
-<h2>Enter your Details</h2>
-<form action="response.jsp" method="post">
-<label>Name:</label>
-<input type="text" name="username" required><br><br>
-<label>Age:</label>
-<input type="number" name="age" required><br><br>
-<input type="submit" value="Submit">
-</form>
+    <h2>Servlet Client Example</h2>
+
+    <button onclick="sendRequest()">Send Request</button>
+
+    <p id="response"></p>
+
+    <script>
+        function sendRequest() {
+            fetch("HelloServlet")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("response").textContent = data;
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
 </body>
 </html>
+
