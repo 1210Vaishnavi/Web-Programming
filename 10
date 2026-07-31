@@ -1,0 +1,185 @@
+CREATE DATABASE testdb;
+USE testdb;
+
+CREATE TABLE users(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+
+
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/DataServlet")
+public class DataServlet extends HttpServlet{
+
+    private static final long serialVersionUID=1L;
+
+    private String jdbcURL="jdbc:mysql://localhost:3306/testdb";
+    private String jdbcUsername="root";
+    private String jdbcPassword="your_password";
+
+    protected void doGet(HttpServletRequest request,HttpServletResponse response)
+            throws ServletException,IOException{
+
+        response.setContentType("text/html");
+        PrintWriter out=response.getWriter();
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection conn=DriverManager.getConnection(jdbcURL,jdbcUsername,jdbcPassword);
+            Statement stmt=conn.createStatement();
+
+            ResultSet rs=stmt.executeQuery("SELECT * FROM users");
+
+            out.println("<h2>User List</h2>");
+            out.println("<table border='1'>");
+            out.println("<tr><th>ID</th><th>Name</th><th>Email</th></tr>");
+
+            while(rs.next()){
+                out.println("<tr>");
+                out.println("<td>"+rs.getInt("id")+"</td>");
+                out.println("<td>"+rs.getString("name")+"</td>");
+                out.println("<td>"+rs.getString("email")+"</td>");
+                out.println("</tr>");
+            }
+
+            out.println("</table>");
+            conn.close();
+
+        }catch(Exception e){
+            out.println("Error: "+e.getMessage());
+        }
+    }
+
+    protected void doPost(HttpServletRequest request,HttpServletResponse response)
+            throws ServletException,IOException{
+
+        response.setContentType("text/html");
+        PrintWriter out=response.getWriter();
+
+        String action=request.getParameter("action");
+        String name=request.getParameter("name");
+        String email=request.getParameter("email");
+        String idStr=request.getParameter("id");
+
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection conn=DriverManager.getConnection(jdbcURL,jdbcUsername,jdbcPassword);
+
+            if(action.equalsIgnoreCase("insert")){
+
+                PreparedStatement ps=conn.prepareStatement("INSERT INTO users(name,email) VALUES(?,?)");
+                ps.setString(1,name);
+                ps.setString(2,email);
+
+                int i=ps.executeUpdate();
+
+                out.println(i>0?"User inserted successfully.":"Insert failed.");
+
+            }else if(action.equalsIgnoreCase("update")){
+
+                int id=Integer.parseInt(idStr);
+
+                PreparedStatement ps=conn.prepareStatement("UPDATE users SET name=?,email=? WHERE id=?");
+                ps.setString(1,name);
+                ps.setString(2,email);
+                ps.setInt(3,id);
+
+                int i=ps.executeUpdate();
+
+                out.println(i>0?"User updated successfully.":"Update failed.");
+
+            }else if(action.equalsIgnoreCase("delete")){
+
+                int id=Integer.parseInt(idStr);
+
+                PreparedStatement ps=conn.prepareStatement("DELETE FROM users WHERE id=?");
+                ps.setInt(1,id);
+
+                int i=ps.executeUpdate();
+
+                out.println(i>0?"User deleted successfully.":"Delete failed.");
+
+            }else{
+                out.println("Invalid action.");
+            }
+
+            conn.close();
+
+        }catch(Exception e){
+            out.println("Error: "+e.getMessage());
+        }
+
+        out.println("<br><a href='index.html'>Go Back</a>");
+    }
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Java JDBC CRUD</title>
+</head>
+<body>
+
+<h2>Insert User</h2>
+
+<form method="post" action="DataServlet">
+    <input type="hidden" name="action" value="insert">
+
+    Name:
+    <input type="text" name="name" required><br><br>
+
+    Email:
+    <input type="email" name="email" required><br><br>
+
+    <button type="submit">Insert</button>
+</form>
+
+<hr>
+
+<h2>Update User</h2>
+
+<form method="post" action="DataServlet">
+    <input type="hidden" name="action" value="update">
+
+    ID:
+    <input type="number" name="id" required><br><br>
+
+    Name:
+    <input type="text" name="name" required><br><br>
+
+    Email:
+    <input type="email" name="email" required><br><br>
+
+    <button type="submit">Update</button>
+</form>
+
+<hr>
+
+<h2>Delete User</h2>
+
+<form method="post" action="DataServlet">
+    <input type="hidden" name="action" value="delete">
+
+    ID:
+    <input type="number" name="id" required><br><br>
+
+    <button type="submit">Delete</button>
+</form>
+
+<hr>
+
+<h2>View Users</h2>
+
+<a href="DataServlet">Refresh User List</a>
+
+</body>
+</html>
